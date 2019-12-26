@@ -26,5 +26,12 @@ namespace LeiHong.Tools.WeChat.Sample.WebApi.Controllers
             if (string.IsNullOrEmpty(url)) url = HttpContext.Request.Host.Host;
             return Ok(_chatSignatureService.GetSign(url));
         }
+
+        [HttpGet]
+        public IActionResult Login(string code)
+        {
+            if (string.IsNullOrEmpty(code)) throw new Exception("code不能为空！");
+            return Ok(_chatSignatureService.Login(code));
+        }
     }
 }

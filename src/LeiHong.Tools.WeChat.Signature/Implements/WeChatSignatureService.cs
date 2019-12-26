@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Net.Http;
+using Flurl.Http;
 using LeiHong.Tools.WeChat.Signature.Abstractions;
 using LeiHong.Tools.WeChat.Signature.WeChat;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,12 @@ namespace LeiHong.Tools.WeChat.Signature.Implements
                 {"signature", signature},
                 {"JSTicketTicket", jsTicketTicket}
             };
+        }
+
+        public WebAccessToken Login(string code)
+        {
+            var url = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid={ApplicationSetting.WxAppId}&secret={ApplicationSetting.WxAppSecret}&code={code}&grant_type=authorization_code";
+            return url.GetAsync().Result.GetJsonAsync<WebAccessToken>().Result;
         }
     }
 }
