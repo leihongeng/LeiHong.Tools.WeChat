@@ -31,6 +31,11 @@ namespace LeiHong.Tools.WeChat.Sample.WebApi
                 builder.WxAppId = Configuration["WeChat:WxAppId"];
                 builder.WxAppSecret = Configuration["WeChat:WxAppSecret"];
             });
+            //配置跨域处理，允许所有来源：
+            services.AddCors(options =>
+                options.AddPolicy("CorsPolicy",
+                    p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +49,8 @@ namespace LeiHong.Tools.WeChat.Sample.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

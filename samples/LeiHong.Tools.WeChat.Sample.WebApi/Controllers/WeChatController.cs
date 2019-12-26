@@ -21,14 +21,9 @@ namespace LeiHong.Tools.WeChat.Sample.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetSign()
-        {
-            return Ok(_chatSignatureService.GetSign(HttpContext.Request.Host.Host));
-        }
-
-        [HttpGet]
         public IActionResult GetSign(string url)
         {
+            if (string.IsNullOrEmpty(url)) url = HttpContext.Request.Host.Host;
             return Ok(_chatSignatureService.GetSign(url));
         }
     }
